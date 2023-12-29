@@ -12,7 +12,7 @@ export default function ClientPage() {
             redirect('/api/auth/signin?callbackUrl=/client')
         }
     })
-    console.log("hi");
+   // console.log("hi");
     return (
         <section className="flex flex-col gap-6">
             <UserCard user={session?.user} pagetype={"Client"} />
