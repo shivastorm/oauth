@@ -1,13 +1,14 @@
 import type { NextAuthOptions } from 'next-auth'
-import GitHubProvider from 'next-auth/providers/github'
+import KeycloakProvider from "next-auth/providers/keycloak"; 
 import CredentialsProvider from 'next-auth/providers/credentials'
 
 export const options: NextAuthOptions = {
     providers: [
-        GitHubProvider({
-            clientId: process.env.GITHUB_ID as string,
-            clientSecret: process.env.GITHUB_SECRET as string,
-        }),
+        KeycloakProvider({
+            clientId: `${process.env.KEYCLOAK_ID}`,
+            clientSecret: `${process.env.KEYCLOAK_SECRET}`,
+            issuer: `${process.env.KEYCLOAK_ISSUER}`,
+          }),          
         CredentialsProvider({
             name: "Credentials",
             credentials: {
@@ -22,6 +23,7 @@ export const options: NextAuthOptions = {
                     placeholder: "your password"
                 }
             },
+            
             async authorize(credentials) {
                 // This is where you need to retrieve user data 
                 // to verify with credentials
@@ -36,4 +38,42 @@ export const options: NextAuthOptions = {
             }
         })
     ],
+    // callbacks: {
+    //     async jwt({ token, account }) {
+    //       const nowTimeStamp = Math.floor(Date.now() / 1000);
+    
+    //       if (account) {
+    //         // account is only available the first time this callback is called on a new session (after the user signs in)
+    //         token.decoded = jwt_decode(account.access_token);
+    //         token.access_token = account.access_token;
+    //         token.id_token = account.id_token;
+    //         token.expires_at = account.expires_at;
+    //         token.refresh_token = account.refresh_token;
+    //         return token;
+    //       } else if (nowTimeStamp < token.expires_at) {
+    //         // token has not expired yet, return it
+    //         return token;
+    //       } else {
+    //         // token is expired, try to refresh it
+    //         console.log("Token has expired. Will refresh...")
+    //         try {
+    //           const refreshedToken = await refreshAccessToken(token);
+    //           console.log("Token is refreshed.")
+    //           return refreshedToken;
+    //         } catch (error) {
+    //           console.error("Error refreshing access token", error);
+    //           return { ...token, error: "RefreshAccessTokenError" };
+    //         }
+    //       }
+    //     },
+    //     async session({ session, token }) {
+    //       // Send properties to the client
+    //       session.access_token = encrypt(token.access_token); // see utils/sessionTokenAccessor.js
+    //       session.id_token = encrypt(token.id_token);  // see utils/sessionTokenAccessor.js
+    //       session.roles = token.decoded.realm_access.roles;
+    //       session.error = token.error;      
+    //       return session;
+    //     },
+    //   },
+    // };
 }
