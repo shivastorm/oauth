@@ -39,11 +39,12 @@ export default function Card({ user, pagetype }: Props) {
     ) : null
 
     return (
-        <section className="flex flex-col gap-4">
+        <section className="flex flex-col gap-4 ">
             {greeting}
             {/* {emailDisplay} */}
             {userImage}
-            <p className="text-2xl text-center">{pagetype} Page!</p>
+            <p className="flex flex-col items-center p-6 bg-white rounded-lg font-bold text-5xl text-black">
+                {pagetype} Page!</p>
         </section>
     )
 }

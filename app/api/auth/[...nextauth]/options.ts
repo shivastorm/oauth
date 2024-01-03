@@ -1,47 +1,55 @@
 import type { NextAuthOptions } from 'next-auth'
-import KeycloakProvider from "next-auth/providers/keycloak"; 
+import KeycloakProvider from "next-auth/providers/keycloak";
 import CredentialsProvider from 'next-auth/providers/credentials'
 
-export const options: NextAuthOptions = {
+export const options: NextAuthOptions= {
     providers: [
         KeycloakProvider({
             clientId: `${process.env.KEYCLOAK_ID}`,
             clientSecret: `${process.env.KEYCLOAK_SECRET}`,
             issuer: `${process.env.KEYCLOAK_ISSUER}`,
-          }),          
-        CredentialsProvider({
-            name: "Credentials",
-            credentials: {
-                username: {
-                    label: "Username:",
-                    type: "text",
-                    placeholder: "your username"
-                },
-                password: {
-                    label: "Password:",
-                    type: "password",
-                    placeholder: "your password"
-                }
-            },
-            
-            async authorize(credentials) {
-                // This is where you need to retrieve user data 
-                // to verify with credentials
-                // Docs: https://next-auth.js.org/configuration/providers/credentials
-                const user = { id: "42", name: "siva", password: "nextauth" }
+        }),
+        // CredentialsProvider({
+        //     name: "Credentials",
+        //     credentials: {
+        //         username: {
+        //             label: "Username:",
+        //             type: "text",
+        //             placeholder: "your username"
+        //         },
+        //         password: {
+        //             label: "Password:",
+        //             type: "password",
+        //             placeholder: "your password"
+        //         }
+        //     },
 
-                if (credentials?.username === user.name && credentials?.password === user.password) {
-                    return user
-                } else {
-                    return null
-                }
-            }
-        })
+        //     async authorize(credentials, req) {
+
+        //         // This is where you need to retrieve user data 
+        //         // to verify with credentials
+        //         // Docs: https://next-auth.js.org/configuration/providers/credentials
+            
+        //     console.log("console=>",credentials);
+        //         const user = {
+        //             id: "42",
+        //             name: "siva",
+        //             password: "nextauth"
+        //         }
+
+        //         if (credentials?.username === user.name && credentials?.password === user.password) {
+        //             return user
+        //         } else {
+        //             return null
+        //         }
+        //     }
+        // })
     ],
+ 
     // callbacks: {
     //     async jwt({ token, account }) {
     //       const nowTimeStamp = Math.floor(Date.now() / 1000);
-    
+
     //       if (account) {
     //         // account is only available the first time this callback is called on a new session (after the user signs in)
     //         token.decoded = jwt_decode(account.access_token);
