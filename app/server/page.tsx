@@ -12,7 +12,7 @@ export default async function ServerPage() {
 
     return (
         <section className="flex flex-col gap-6">
-            <UserCard user={session?.user} pagetype={"Server"} />
+            <UserCard user={session?.user} pagetype={"Server"} role="" />
         </section>
     )
 
